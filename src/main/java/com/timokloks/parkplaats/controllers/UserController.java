@@ -5,10 +5,7 @@ import com.timokloks.parkplaats.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,6 +23,11 @@ public class UserController {
         }
 
         String registrationResult = userService.registerUser(user);
-        return ResponseEntity.ok(registrationResult);
+        if(registrationResult.equals("User registered successfully")) {
+            return ResponseEntity.ok(registrationResult);
+        }
+        else {
+            return ResponseEntity.badRequest().body(registrationResult);
+        }
     }
 }
